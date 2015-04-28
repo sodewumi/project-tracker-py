@@ -24,6 +24,17 @@ def get_student_by_github(github):
         row[0], row[1], row[2])
 
 
+def make_new_student(first_name, last_name, github):
+    """Add a new student and print confirmation.
+
+    Given a first name, last name, and GitHub account, add student database
+    and print a confirmation message.
+    """
+
+    QUERY = """INSERT INTO Students VALUES (?, ?, ?)"""
+    db_cursor.execute(QUERY, (first_name, last_name, github))
+
+
 def handle_input():
     """Main loop.
 
