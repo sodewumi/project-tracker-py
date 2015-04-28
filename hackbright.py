@@ -34,6 +34,34 @@ def make_new_student(first_name, last_name, github):
     QUERY = """INSERT INTO Students VALUES (?, ?, ?)"""
     db_cursor.execute(QUERY, (first_name, last_name, github))
 
+    db_connection.commit()
+    print "Successfully aded sutdent: %s %s" % (first_name, last_name)
+
+
+def find_projects(title):
+    """Find projects by title """
+
+    QUERY = """
+        SELECT 
+        FROM projects
+        WHERE 
+    """
+    db_cursor.execute(QUERY, (title,))
+
+
+def find_grade(github, title):
+    """Find student's grade given github name and project title"""
+
+    QUERY = """
+        SELECT grade
+        FROM Grades
+        WHERE student_github = ? AND project_title = ?
+    """
+    db_cursor.execute(QUERY, (github, title))
+    results = db_cursor.fetchall()
+
+    print results
+
 
 def handle_input():
     """Main loop.
@@ -57,6 +85,9 @@ def handle_input():
             first_name, last_name, github = args   # unpack!
             make_new_student(first_name, last_name, github)
 
+        elif command == "find_grade":
+            github, title = args
+            find_grade(github, title)
 
 if __name__ == "__main__":
     handle_input()
