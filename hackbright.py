@@ -60,7 +60,9 @@ def find_grade(github, title):
     db_cursor.execute(QUERY, (github, title))
     results = db_cursor.fetchall()
 
-    print results
+    for result in results:
+        for x in result:
+            print x
 
 
 def handle_input():
