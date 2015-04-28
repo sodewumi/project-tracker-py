@@ -42,11 +42,16 @@ def find_projects(title):
     """Find projects by title """
 
     QUERY = """
-        SELECT 
-        FROM projects
-        WHERE 
+        SELECT *
+        FROM Projects
+        WHERE title = ?
     """
     db_cursor.execute(QUERY, (title,))
+    results = db_cursor.fetchall()
+
+    for result in results:
+        id_num, title, description, max_grade = result 
+        print "id: %d \ntitle: %s \ndescription: %s \nmax_grade: %d \n" % (id_num, title, description, max_grade)
 
 
 def find_grade(github, title):
@@ -90,6 +95,10 @@ def handle_input():
         elif command == "find_grade":
             github, title = args
             find_grade(github, title)
+
+        elif command == "find_projects":
+            title = args[0]
+            find_projects(title)
 
 if __name__ == "__main__":
     handle_input()
