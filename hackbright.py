@@ -69,6 +69,18 @@ def find_grade(github, title):
         for x in result:
             print x
 
+def give_grade(github, project, grade):
+    """Add in grade for a student given student's gihub and project"""
+
+    QUERY = """
+        INSERT INTO Grades (student_github, project_title, grade) VALUES (?, ?, ?)
+    """
+    db_cursor.execute(QUERY, (github, project, grade))
+    db_connection.commit()
+
+    print "Added new grade for student!"
+
+
 
 def handle_input():
     """Main loop.
@@ -99,6 +111,10 @@ def handle_input():
         elif command == "find_projects":
             title = args[0]
             find_projects(title)
+
+        elif command == "give_grade":
+            github, project, grade = args
+            give_grade(github, project, grade)
 
 if __name__ == "__main__":
     handle_input()
